@@ -24,7 +24,9 @@
     4) 게임을 통해, 어린 아이들에게 COVID-19의 심각성을 일깨워준다.    
     
 📌 개발 스펙    
+   
 ![image](https://user-images.githubusercontent.com/70639677/170960150-6ad7b25a-6fa2-48bd-89e1-9e6ad1d38765.png)
 
 📌 구조도    
+   
 ![image](https://user-images.githubusercontent.com/70639677/170960219-e2d72a6b-711c-4ce4-8712-53d93929eff8.png)
