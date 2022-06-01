@@ -30,3 +30,7 @@
 📌 구조도    
    
 ![image](https://user-images.githubusercontent.com/70639677/170960219-e2d72a6b-711c-4ce4-8712-53d93929eff8.png)
+
+📌 실제 모습
+   
+![image](https://user-images.githubusercontent.com/70639677/171353990-06831a46-4d0e-4e23-9815-1d12ff1f31cf.png)
