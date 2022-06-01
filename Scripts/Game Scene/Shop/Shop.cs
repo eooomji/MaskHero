@@ -10,6 +10,8 @@ public class Shop : MonoBehaviour
     public string[] talkData;
     public Text talkText;
 
+    public AudioSource MaskSound;
+    public AudioSource SpraySound;
     public void Buy(int idx)
     {
         int price = itemPrice[idx];
@@ -22,8 +24,16 @@ public class Shop : MonoBehaviour
 
         GameManager.moneyNum -= price;
 
-        if (idx == 0) GameManager.maskNum++;
-        else GameManager.sprayNum++;
+        if (idx == 0)
+        {
+            MaskSound.Play();
+            GameManager.maskNum++;
+        }
+        else
+        {
+            SpraySound.Play();
+            GameManager.sprayNum++;
+        }
 
     }
 

@@ -25,12 +25,13 @@ public class RankS : MonoBehaviour
     public AudioSource btnA;
 
     public int[,] intPlayTime = new int[5,3];
-    public string[] GameNickname = { "gg", "엄지", "김성원", "남자", "우도기"};
+    public string[] GameNickname = { "gg", "엄지", "김성원", "남자", "흐흐흐"};
     public string[] GamePlayTime = { "00:02:20", "00:02:33", "00:03:12", "00:04:01", "00:04:46"};
     public int idx = 5;
 
     void Start()
     {
+        idx = 5;
         string userNickname = ResultNameInput.nickname;
 
         MyNickname.text = userNickname; // 사용자 닉네임 잘 넘어옴
@@ -155,10 +156,11 @@ public class RankS : MonoBehaviour
 
         GameManager.cleaningVirus = 0;
         GameManager.countMasking = 0;
-        GameManager.moneyNum = 50000;
-        GameManager.sprayNum = 50;
-        GameManager.maskNum = 50;
-        GameManager.health = 50;
+        GameManager.moneyNum = 5000;
+        GameManager.sprayNum = 30;
+        GameManager.maskNum = 30;
+        GameManager.health = 20;
         GameManager.stage = 1;
+        idx = 5;
     }
 }

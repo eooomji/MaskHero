@@ -20,12 +20,20 @@ public class GameOverS : MonoBehaviour
     public void RetryBtnClick()
     {
         btnA.Play();
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(2);
+
+        GameManager.cleaningVirus = 0;
+        GameManager.countMasking = 0;
+        GameManager.moneyNum = 5000;
+        GameManager.sprayNum = 30;
+        GameManager.maskNum = 30;
+        GameManager.health = 20;
+        GameManager.stage = 1;
     }
 
     public void ExitBtnClick()
     {
         btnA.Play();
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 }

@@ -5,11 +5,12 @@ using UnityEngine;
 public class EnterShop : MonoBehaviour
 {
     public GameObject ShopUI;
-    public GameObject JoyStick;
 
     public GameObject Mask01;
     public GameObject Mask02;
     public GameObject Mask03;
+
+    public static bool InShop = false;
 
     public void OnTriggerEnter(Collider player)
     {
@@ -36,8 +37,7 @@ public class EnterShop : MonoBehaviour
                 Mask02.SetActive(false);
                 Mask03.SetActive(true);
             }
-
-            JoyStick.SetActive(false);
+            InShop = true;
         }
     }
 }

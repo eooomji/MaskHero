@@ -18,6 +18,32 @@ public class PlayerS : MonoBehaviour
 
     public AudioSource nextBtn;
 
+    int ClickCount = 0;
+
+    void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ClickCount++;
+            if (!IsInvoking("DoubleClick"))
+                Invoke("DoubleClick", 1.0f);
+
+        }
+
+        else if (ClickCount == 2)
+        {
+            CancelInvoke("DoubleClick");
+            Application.Quit();
+        }
+    }
+
+    void DoubleClick()
+    {
+        ClickCount = 0;
+    }
+
+
     public void MaleSelect()
     {
         FemaleBtn.SetActive(false);
@@ -25,6 +51,7 @@ public class PlayerS : MonoBehaviour
         nextBtn.Play();
         SexText.text = "닉네임을 입력해주세요";
         MaleNickNameObject.SetActive(true);
+        GetComponent<Button>().interactable = false;
     }
 
     public void FemaleSelect()
@@ -34,6 +61,7 @@ public class PlayerS : MonoBehaviour
         nextBtn.Play();
         SexText.text = "닉네임을 입력해주세요";
         FemaleNickNameObject.SetActive(true);
+        GetComponent<Button>().interactable = false;
     }
 
 }

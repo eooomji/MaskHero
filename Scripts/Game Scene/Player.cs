@@ -28,10 +28,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (c10 == false)
+/*        if (c10 == false)
         {
             Destroy(gameObject);
-        }
+        }*/
 
         if (MaskBtn.doThrow == true)
         {

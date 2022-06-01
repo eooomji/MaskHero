@@ -19,10 +19,10 @@ public class ReloadBtn : MonoBehaviour
 
         GameManager.cleaningVirus = 0;
         GameManager.countMasking = 0;
-        GameManager.moneyNum = 50000;
-        GameManager.sprayNum = 50;
-        GameManager.maskNum = 50;
-        GameManager.health = 50;
+        GameManager.moneyNum = 5000;
+        GameManager.sprayNum = 30;
+        GameManager.maskNum = 30;
+        GameManager.health = 20;
         GameManager.stage = 1;
     }
 }

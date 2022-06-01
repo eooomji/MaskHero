@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static int moneyNum = 50000;
-    public static int sprayNum = 50; // default : 50
-    public static int maskNum = 50; // default : 50
-    public static int health = 50; // default : 50
+    public static int moneyNum = 5000;
+    public static int sprayNum = 30; 
+    public static int maskNum = 30; 
+    public static int health = 20; 
     public static int countMasking = 0;
     public static int cleaningVirus = 0;
     public static int stage = 1;
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject Mask01;
     public GameObject Mask02;
     public GameObject Mask03;
+    public GameObject SprayBtn;
 
     public float playTime;
 
@@ -40,17 +41,30 @@ public class GameManager : MonoBehaviour
     public GameObject SuccessPanel;
 
     public AudioSource bgmA;
+    public AudioSource bgmB;
     // public AudioSource rankBtnA;
 
     public RectTransform healthGroup;
     public RectTransform healthBar;
 
-    public int playerMaxHealth = 50;
+    public int playerMaxHealth = 20;
 
     bool isEnd;
     bool c8 = false;
     bool c12 = false;
     public static bool isBattle;
+
+    bool isEnterShop = false;
+    bool isEnterShop2 = false;
+    bool isChange = false;
+
+    int ClickCount = 0;
+
+    //StageChangePanel
+    public GameObject joystick;
+    public GameObject ButtonGroup;
+    public GameObject StageChangePanel;
+    public Text StageChangeTxt;
 
     void Start()
     {
@@ -70,24 +84,13 @@ public class GameManager : MonoBehaviour
             GirlPlayer.SetActive(true);
         }
 
-        if (MaskS.MaskNum[1] == 1)
-        {
-            Mask01.SetActive(true);
-            Mask02.SetActive(false);
-            Mask03.SetActive(false);
-        }
-        else if (MaskS.MaskNum[2] == 1)
-        {
-            Mask01.SetActive(false);
-            Mask02.SetActive(true);
-            Mask03.SetActive(false);
-        }
-        else
-        {
-            Mask01.SetActive(false);
-            Mask02.SetActive(false);
-            Mask03.SetActive(true);
-        }
+        Mask01.SetActive(false);
+        Mask02.SetActive(false);
+        Mask03.SetActive(false);
+
+        SprayBtn.SetActive(false);
+        joystick.SetActive(false);
+
     }
 
     void Update()
@@ -97,58 +100,117 @@ public class GameManager : MonoBehaviour
             bgmA.Play();
             StageStart();
             c8 = true;
+            DontDestroyOnLoad(bgmA);
         }
+
         StartCoroutine(doingBattle());
+
         if (isEnd && c12 == false)
         {
             playTime += Time.deltaTime; // 인식 완 --> 카운트다운 시작
+
+            if(EnterShop.InShop == false && isChange == false)
+            {
+                if (MaskS.MaskNum[1] == 1)
+                {
+                    Mask01.SetActive(true);
+                    Mask02.SetActive(false);
+                    Mask03.SetActive(false);
+                }
+
+                else if (MaskS.MaskNum[2] == 1)
+                {
+                    Mask01.SetActive(false);
+                    Mask02.SetActive(true);
+                    Mask03.SetActive(false);
+                }
+
+                else
+                {
+                    Mask01.SetActive(false);
+                    Mask02.SetActive(false);
+                    Mask03.SetActive(true);
+                }
+                SprayBtn.SetActive(true);
+                joystick.SetActive(true);
+
+            }
+            else
+            {
+                Mask01.SetActive(false);
+                Mask02.SetActive(false);
+                Mask03.SetActive(false);
+                SprayBtn.SetActive(false);
+                joystick.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ClickCount++;
+            if (!IsInvoking("DoubleClick"))
+                Invoke("DoubleClick", 1.0f);
+        }
+
+        else if (ClickCount == 2)
+        {
+            CancelInvoke("DoubleClick");
+            Application.Quit();
         }
     }
 
+    void DoubleClick() { ClickCount = 0; }
 
     void GameClear()
     {
-        SuccessPanel.SetActive(true);
+        // SuccessPanel.SetActive(true);
         c12 = true;
         bgmA.Stop();
         Player.c10 = false;
+        SceneManager.LoadScene(5);
     }
+
     IEnumerator doingBattle()
     {
         yield return new WaitForSeconds(0.1f);
         if (stage == 1 && countMasking >= 1 && cleaningVirus >= 1) StageEnd();
-        else if (stage == 2 && countMasking >= 1 && cleaningVirus >= 1) StageEnd();
-        else if (stage == 3 && countMasking >= 1 && cleaningVirus >= 1) StageEnd();
-        else if (stage == 4 && countMasking >= 1 && cleaningVirus >= 1) StageEnd();
-        else if (stage == 5 && countMasking >= 1 && cleaningVirus >= 1) GameClear();
+        else if (stage == 2 && countMasking >= 2 && cleaningVirus >= 2) StageEnd();
+        else if (stage == 3 && countMasking >= 3 && cleaningVirus >= 3) StageEnd();
+        else if (stage == 4 && countMasking >= 4 && cleaningVirus >= 4) StageEnd();
+        else if (stage == 5 && countMasking >= 5 && cleaningVirus >= 5) GameClear();
     }
 
     public void StageStart()
     {
         isBattle = true;
         Debug.Log(GameManager.isBattle);
-
     }
 
     public void StageEnd()
     {
-        /* if (PlayerS.PlayerSex[1] == 1)
-         {
-             BoyPlayer.transform.position = Vector3.
-         }
-         else GirlPlayer.transform.position = Vector3.up * (-0.68f);*/
-
         isBattle = false;
-        Debug.Log(GameManager.isBattle);
         countMasking = 0;
         cleaningVirus = 0;
         stage++;
+        StartCoroutine(StageChange());
         Invoke("StageStart", 0.5f);
+    }
+
+    IEnumerator StageChange()
+    {
+        bgmB.Play();
+        isChange = true;
+        ButtonGroup.SetActive(false);
+        StageChangePanel.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        bgmB.Stop();
+        ButtonGroup.SetActive(true);
+        StageChangePanel.SetActive(false);
+        isChange = false;
     }
 
     void LateUpdate()
     {
-
         if (moneyNum >= 1000)
         {
             string m = moneyNum.ToString();
@@ -158,22 +220,38 @@ public class GameManager : MonoBehaviour
             else if (m.Length == 5) down = 2;
             else down = 1;
 
-            /*if (m[down] == '0') down = 0;
-            else down = 5;*/
             down = Convert.ToInt32(m[down] - '0');
 
             moneyTxt.text = up + "," + down + "00원";
         }
         else moneyTxt.text = moneyNum + "원";
 
-        sprayTxt.text = "x " + sprayNum;
-        maskTxt.text = "x " + maskNum;
+        if (isEnd && EnterShop.InShop == false)
+        {
+            sprayTxt.text = "x " + sprayNum;
+            maskTxt.text = "x " + maskNum;
 
-        IngMaskTxt.text = countMasking + "개";
-        IngSprayTxt.text = cleaningVirus + "개";
+            if (isEnterShop2 == true)
+            {
+                isEnterShop2 = false;
+                maskTxt.enabled = !maskTxt.enabled;
+                IngMaskTxt.enabled = !IngMaskTxt.enabled;
+            }
+            IngMaskTxt.text = countMasking + "개";
+            IngSprayTxt.text = cleaningVirus + "개";
+
+            isEnterShop = false;
+        }
+        else if(EnterShop.InShop == true && isEnterShop == false)
+        {
+            isEnterShop = true;
+            isEnterShop2 = true;
+            maskTxt.enabled = !maskTxt.enabled;
+            IngMaskTxt.enabled = !IngMaskTxt.enabled;
+        }
 
         stageTxt.text = "STAGE " + stage;
-
+        StageChangeTxt.text = "STAGE " + stage;
         int hour = (int)playTime / 3600;
         int min = (int)((playTime - hour * 3600) / 60);
         int sec = (int)(playTime % 60);
@@ -181,11 +259,7 @@ public class GameManager : MonoBehaviour
         playTimeTxt.text = string.Format("{0:00}", hour) + " : " + string.Format("{0:00}", min) + " : " + string.Format("{0:00}", sec);
         UserPlayTime = playTimeTxt.text.ToString();
 
-        /*Debug.Log("현재 체력 : " + health);
-        Debug.Log("마스크 씌운 횟수 : " + countMasking);
-        Debug.Log("바이러스 퇴치 횟수 : " + cleaningVirus);*/
-
-        if (health > 0) healthBar.localScale = new Vector3((float)health / 50, 1, 1);
+        if (health > 0) healthBar.localScale = new Vector3((float)health / 20, 1, 1);
 
         if (health <= 0)
         {
