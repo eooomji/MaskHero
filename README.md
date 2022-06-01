@@ -31,12 +31,20 @@
     
 #### 📌 개발 스펙    
    
-![image](https://user-images.githubusercontent.com/70639677/170960150-6ad7b25a-6fa2-48bd-89e1-9e6ad1d38765.png)
+![image](https://user-images.githubusercontent.com/70639677/171399096-c855b4db-fe62-4d29-bca0-42bef2b8783b.png)
 
 #### 📌 구조도    
    
-![image](https://user-images.githubusercontent.com/70639677/170960219-e2d72a6b-711c-4ce4-8712-53d93929eff8.png)
+![image](https://user-images.githubusercontent.com/70639677/171399192-c0c93d45-28ab-446f-9d1a-cd55a0e1964f.png)
+
+#### 📌 게임 방법  
+
+![image](https://user-images.githubusercontent.com/70639677/171399694-35c85f1d-7725-42d8-92c2-0c2cb4552eae.png)
+
+#### 📌 게임 화면  
+
+![image](https://user-images.githubusercontent.com/70639677/171399968-bce89b56-6cac-4933-832f-790378eb3696.png)
 
 #### 📌 실제 모습
    
-![image](https://user-images.githubusercontent.com/70639677/171353990-06831a46-4d0e-4e23-9815-1d12ff1f31cf.png)
+![image](https://user-images.githubusercontent.com/70639677/171353990-06831a46-4d0e-4e23-9815-1d12ff1f31cf.png) 
